@@ -1,96 +1,301 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="/_vercel/insights/script.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
-    <title>Vercel HTML Starter</title>
-    <meta
-      name="description"
-      content="High-performance HTML based website template."
-    />
-  </head>
-  <body>
-    <h1>Vercel HTML Starter</h1>
-    <p>
-      This template is a simple, but powerful single
-      <code>index.html</code> file deployed to
-      <a href="https://vercel.com">Vercel</a>. When your site is deployed, all
-      static assets (like HTML, JavaScript, CSS, images, and more) are deployed
-      globally to every
-      <a href="https://vercel.com/docs/concepts/edge-network/overview"
-        >Vercel Edge Network</a
-      >
-      region.
-    </p>
-    <h2>Simple, privacy-friendly analytics</h2>
-    <p>
-      Want to understand your visitor traffic? Vercel Analytics gives you
-      first-party, privacy-friendly traffic analytics for your HTML site. This
-      template is already configured using the following script:
-    </p>
-    <pre><code>&lt;script defer src="/_vercel/insights/script.js"&gt;&lt;/script&gt;</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/analytics">Vercel Analytics</a>.
-    </p>
-    <h2>Integrated with git</h2>
-    <p>
-      Deploying updates to your site is as simple as
-      <code>git push</code> thanks to Vercel's advanced
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-      Support for GitHub, GitLab, Bitbucket is zero-configuration, and with the
-      flexible Vercel CLI and API, you can integrate with any tool possible.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-    </p>
-    <h2>Fast <code>gzip</code> compression</h2>
-    <p>
-      To help ensure the smallest possible file sizes for your static assets,
-      the Vercel Edge Network compresses files by default using
-      <code>gzip</code>. You can also optionally use
-      <code>brotli</code> compressesion if you prefer.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/edge-network/compression"
-        >compression</a
-      >.
-    </p>
-    <h2>Advanced routing configuration</h2>
-    <p>
-      Vercel gives you a variety of ways to configure the routing of your
-      website. For example, adding redirects, rewrites, or headers to your page.
-      While you can use <code>vercel.json</code> to define these through JSON,
-      you can also express your routing configuration as code using
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-    <p>
-      Middleware runs before the
-      <a href="https://vercel.com/docs/concepts/edge-network/caching"
-        >Vercel Edge Network Cache</a
-      >, so you can configure routing exactly as your application needs. For
-      example, this template uses <code>middleware.js</code> defined in the root
-      of the repository to add additional security headers to the site:
-    </p>
-    <pre><code>referrer-policy: origin-when-cross-origin
-strict-transport-security: max-age=31536000; includeSubDomains; preload
-x-content-type-options: nosniff
-x-dns-prefetch-control: on
-x-frame-options: DENY</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-  </body>
-</html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Book Catalog</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1>Book Catalog</h1>
+            <div class="row justify-content-end mb-3"> 
+                <div class="col-auto"> 
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addBookModal">Add Book</button>
+                </div>
+                <div class="col-auto"> 
+                    <a href="http://" target="_blank" rel="noopener noreferrer">Code Source</a>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>ISBN</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Year Published</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="bookList">
+                    <!-- Books will be displayed here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    
+        <!-- Add Book Modal -->
+        <div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addBookModalLabel">Add Book</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addBookForm">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="isbn">ISBN</label>
+                                <input type="text" class="form-control" id="isbn" name="isbn" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="author">Author</label>
+                                <input type="text" class="form-control" id="author" name="author" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="publisher">Publisher</label>
+                                <input type="text" class="form-control" id="publisher" name="publisher" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="year_published">Year Published</label>
+                                <input type="number" class="form-control" id="year_published" name="year_published" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <input type="text" class="form-control" id="category" name="category" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Edit Book Modal -->
+        <div class="modal fade" id="editBookModal" tabindex="-1" role="dialog" aria-labelledby="editBookModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editBookModalLabel">Edit Book</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editBookForm">
+                            <input type="hidden" id="editBookId" name="id">
+                            <div class="form-group">
+                                <label for="editTitle">Title</label>
+                                <input type="text" class="form-control" id="editTitle" name="title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editIsbn">ISBN</label>
+                                <input type="text" class="form-control" id="editIsbn" name="isbn" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editAuthor">Author</label>
+                                <input type="text" class="form-control" id="editAuthor" name="author" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editPublisher">Publisher</label>
+                                <input type="text" class="form-control" id="editPublisher" name="publisher" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editYearPublished">Year Published</label>
+                                <input type="number" class="form-control" id="editYearPublished" name="year_published" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editCategory">Category</label>
+                                <input type="text" class="form-control" id="editCategory" name="category" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+    
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            // Function to add a book
+            function addBook() {
+                var title = document.getElementById("title").value;
+                var isbn = document.getElementById("isbn").value;
+                var author = document.getElementById("author").value;
+                var publisher = document.getElementById("publisher").value;
+                var yearPublished = document.getElementById("year_published").value;
+                var category = document.getElementById("category").value;
+    
+                // Create a unique ID for the book
+                var id = Date.now();
+    
+                // Create a book object
+                var book = {
+                    id: id,
+                    title: title,
+                    isbn: isbn,
+                    author: author,
+                    publisher: publisher,
+                    year_published: yearPublished,
+                    category: category
+                };
+    
+                // Get existing books from local storage or initialize an empty array
+                var books = JSON.parse(localStorage.getItem("books")) || [];
+    
+                // Add the new book to the array
+                books.push(book);
+    
+                // Save the updated array back to local storage
+                localStorage.setItem("books", JSON.stringify(books));
+    
+                // Reset the form
+                document.getElementById("addBookForm").reset();
+    
+                // Close the modal
+                $('#addBookModal').modal('hide');
+    
+                // Refresh the book list
+                displayBooks();
+            }
+    
+            // Function to display books
+            function displayBooks() {
+                var bookList = document.getElementById("bookList");
+                var books = JSON.parse(localStorage.getItem("books")) || [];
+    
+                // Clear the existing list
+                bookList.innerHTML = "";
+    
+                // Loop through the books and add them to the list
+                books.forEach(function(book) {
+                    var row = "<tr>";
+                    row += "<td>" + book.title + "</td>";
+                    row += "<td>" + book.isbn + "</td>";
+                    row += "<td>" + book.author + "</td>";
+                    row += "<td>" + book.publisher + "</td>";
+                    row += "<td>" + book.year_published + "</td>";
+                    row += "<td>" + book.category + "</td>";
+                    row += "<td>";
+                    row += "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#editBookModal' onclick='editBook(" + book.id + ")'>Edit</button> ";
+                    row += "<button type='button' class='btn btn-danger' onclick='deleteBook(" + book.id + ")'>Delete</button>";
+                    row += "</td>";
+                    row += "</tr>";
+                    bookList.innerHTML += row;
+                });
+            }
+    
+           
+    
+            // Event listener for form submission
+            document.getElementById("addBookForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                addBook();
+            });
+    
+            // Display books on page load
+            displayBooks();
+        </script>
+        <script>
+            // Function to edit a book
+            function editBook(id) {
+                // Retrieve the book from local storage
+                var books = JSON.parse(localStorage.getItem("books")) || [];
+                var book = books.find(function(item) {
+                    return item.id === id;
+                });
+        
+                // Populate the edit form fields with the book's information
+                document.getElementById("editBookId").value = book.id;
+                document.getElementById("editTitle").value = book.title;
+                document.getElementById("editIsbn").value = book.isbn;
+                document.getElementById("editAuthor").value = book.author;
+                document.getElementById("editPublisher").value = book.publisher;
+                document.getElementById("editYearPublished").value = book.year_published;
+                document.getElementById("editCategory").value = book.category;
+            }
+        
+            // Function to update a book
+            function updateBook() {
+                var id = document.getElementById("editBookId").value;
+                var title = document.getElementById("editTitle").value;
+                var isbn = document.getElementById("editIsbn").value;
+                var author = document.getElementById("editAuthor").value;
+                var publisher = document.getElementById("editPublisher").value;
+                var yearPublished = document.getElementById("editYearPublished").value;
+                var category = document.getElementById("editCategory").value;
+        
+                // Retrieve the books from local storage
+                var books = JSON.parse(localStorage.getItem("books")) || [];
+        
+                // Find the index of the book to be updated
+                var index = books.findIndex(function(book) {
+                    return book.id == id;
+                });
+        
+                // Update the book with the new information
+                books[index] = {
+                    id: id,
+                    title: title,
+                    isbn: isbn,
+                    author: author,
+                    publisher: publisher,
+                    year_published: yearPublished,
+                    category: category
+                };
+        
+                // Save the updated books back to local storage
+                localStorage.setItem("books", JSON.stringify(books));
+        
+                // Close the modal
+                $('#editBookModal').modal('hide');
+        
+                // Refresh the book list
+                displayBooks();
+            }
+        
+            // Event listener for edit form submission
+            document.getElementById("editBookForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+                updateBook();
+            });
+
+            
+        </script>
+
+        <script>
+            // Function to delete a book
+            function deleteBook(id) {
+                // Retrieve the books from local storage
+                var books = JSON.parse(localStorage.getItem("books")) || [];
+                
+                // Find the index of the book to be deleted
+                var index = books.findIndex(function(book) {
+                    return book.id == id;
+                });
+                
+                // Remove the book from the array
+                if (index !== -1) {
+                    books.splice(index, 1);
+                }
+                
+                // Save the updated books back to local storage
+                localStorage.setItem("books", JSON.stringify(books));
+                
+                // Refresh the book list
+                displayBooks();
+            }
+        </script>
+    </body>
+    </html>
+    
